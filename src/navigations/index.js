@@ -1,15 +1,51 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '../components/home';
+import AchievmentScreen from '../components/home/achievment';
+import TrainingScreen from '../components/home/training';
+
 import OurTeamScreen from '../components/ourteam';
 import TeamInfoScreen from '../components/teaminfo';
 
-BottomTab = createBottomTabNavigator();
 
+HomeStack = createStackNavigator();
+const HomeStackNavigator = ({navigation}) => (
+  <HomeStack.Navigator
+    initialRouteName="Home"
+  >
+    <HomeStack.Screen name="Home"
+      component={HomeScreen}
+      options={{
+        headerTitle:null,
+        headerLeft:null,
+        headerTransparent:true,
+        cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+      }}
+    />
+    <HomeStack.Screen name="Achievment"
+      component={AchievmentScreen}
+      options={{
+        headerTitle: null,
+        headerLeft: null,
+        headerTransparent: true,
+      }}
+    />
+    <HomeStack.Screen name="Training"
+      component={TrainingScreen}
+      options={{
+        headerTitle: null,
+        headerLeft: null,
+        headerTransparent: true,
+      }}
+    />
+  </HomeStack.Navigator>
+)
+
+BottomTab = createBottomTabNavigator();
 const Tab = ({navigation}) => (
   <BottomTab.Navigator initialRouteName="Home"
     screenOptions={({ route }) => ({
@@ -43,10 +79,15 @@ const Tab = ({navigation}) => (
     tabBarOptions={{
       activeTintColor: '#7BB2D4',
       inactiveTintColor: '#CCCCCC',
+      style:{
+        height:75,
+        paddingBottom:10,
+        paddingTop: 10,
+        elevation:0,
+      }
     }}
-    barStyle={{backgrounColor:'#ff0000'}}
   >
-    <BottomTab.Screen name="Home" component={HomeScreen} />
+    <BottomTab.Screen name="Home" component={HomeStackNavigator} />
     <BottomTab.Screen name="OurTeam" component={OurTeamScreen} />
     <BottomTab.Screen name="TeamInfo" component={TeamInfoScreen} />
   </BottomTab.Navigator>
